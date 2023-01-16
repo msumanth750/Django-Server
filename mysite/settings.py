@@ -57,7 +57,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'mysite.urls'
-CSRF_TRUSTED_ORIGINS = ['https://django-server-production-8227.up.railway.app','https://*.127.0.0.1']
+CSRF_TRUSTED_ORIGINS = ['https://django-server-production-8227.up.railway.app','https://fairbar.site','https://*.127.0.0.1']
 
 TEMPLATES = [
     {
