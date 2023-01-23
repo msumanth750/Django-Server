@@ -20,5 +20,6 @@ from myapp.views import index
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('authenticate.urls')),
+    path('brands/',include('brands.urls')),
     path('',index)
 ]

@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'authenticate',
     'myapp',
+    'brands',
 ]
 
 MIDDLEWARE = [
@@ -80,17 +81,28 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'railway', #os.environ["PGDATABASE"],
-        'USER': 'postgres',#os.environ["PGUSER"],
-        'PASSWORD': 'gKF9h52lxBp9cqcN2EUD' ,#os.environ["PGPASSWORD"],
-        'HOST': 'containers-us-west-165.railway.app',#os.environ["PGHOST"],
-        'PORT': 6526,#os.environ["PGPORT"],
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'railway', #os.environ["PGDATABASE"],
+            'USER': 'postgres',#os.environ["PGUSER"],
+            'PASSWORD': 'gKF9h52lxBp9cqcN2EUD' ,#os.environ["PGPASSWORD"],
+            'HOST': 'containers-us-west-165.railway.app',#os.environ["PGHOST"],
+            'PORT': 6526,#os.environ["PGPORT"],
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME':os.environ["PGDATABASE"],
+        'USER':os.environ["PGUSER"],
+        'PASSWORD':os.environ["PGPASSWORD"],
+        'HOST': os.environ["PGHOST"],
+        'PORT': os.environ["PGPORT"],
+        }
+        }
 
 
 # Password validation
