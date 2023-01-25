@@ -21,5 +21,12 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('authenticate.urls')),
     path('brands/',include('brands.urls')),
-    path('',index)
+    path('stock/',include('stock.urls')),
+    path('sales/',include('sales.urls')),
+    path('receits/',include('receits.urls')),
+    path('cash/',include('cash.urls')),
+    path('products/',include('products.urls')),
+    path('prices/',include('prices.urls')),
+
+    path('',index,name='dashboard')
 ]
