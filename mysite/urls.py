@@ -17,8 +17,24 @@ from django.contrib import admin
 from django.urls import path,include
 from myapp.views import index
 
+from django.contrib.auth.models import User
+from rest_framework import routers, serializers, viewsets
+
+class UserSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = User
+        fields = ['url', 'username', 'email', 'is_staff']
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+router = routers.DefaultRouter()
+router.register(r'users', UserViewSet)
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+
     path('accounts/', include('authenticate.urls')),
     path('brands/',include('brands.urls')),
     path('stock/',include('stock.urls')),
@@ -27,6 +43,15 @@ urlpatterns = [
     path('cash/',include('cash.urls')),
     path('products/',include('products.urls')),
     path('prices/',include('prices.urls')),
-
-    path('',index,name='dashboard')
+    path('index',index,name='dashboard')
+]+[
+    path('api/', include(router.urls)),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path('api/brands/',include('brands.api_urls')),
+    # path('api/stock/',include('stock.api_urls')),
+    # path('api/sales/',include('sales.api_urls')),
+    # path('api/receits/',include('receits.api_urls')),
+    # path('api/cash/',include('cash.api_urls')),
+    # path('api/products/',include('products.api_urls')),
+    # path('api/prices/',include('prices.api_urls')),
 ]
