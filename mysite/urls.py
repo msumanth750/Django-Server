@@ -43,15 +43,15 @@ urlpatterns = [
     path('cash/',include('cash.urls')),
     path('products/',include('products.urls')),
     path('prices/',include('prices.urls')),
-    path('index',index,name='dashboard')
+    path('',index,name='dashboard')
 ]+[
     path('api/', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('api/brands/',include('brands.api_urls')),
-    # path('api/stock/',include('stock.api_urls')),
-    # path('api/sales/',include('sales.api_urls')),
-    # path('api/receits/',include('receits.api_urls')),
+    path('api/stock/',include('stock.api_urls')),
+    path('api/sales/',include('sales.api_urls')),
+    path('api/receits/',include('receits.api_urls')),
     # path('api/cash/',include('cash.api_urls')),
-    # path('api/products/',include('products.api_urls')),
+    path('api/products/',include('products.api_urls')),
     # path('api/prices/',include('prices.api_urls')),
 ]

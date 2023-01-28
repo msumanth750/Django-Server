@@ -11,3 +11,4 @@ def brands(request):
 class BrandViewset(viewsets.ModelViewSet):
     queryset = Brand.objects.all()
     serializer_class = BrandSerializer
+    lookup_field ='id'
