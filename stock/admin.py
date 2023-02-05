@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Stock,StockPrice
+from .models import Stock,Stockprice
 # Register your models here.
 admin.site.register(Stock)
-admin.site.register(StockPrice)
+admin.site.register(Stockprice)
