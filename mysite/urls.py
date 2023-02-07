@@ -53,5 +53,5 @@ urlpatterns = [
     path('api/receits/',include('receits.api_urls')),
     # path('api/cash/',include('cash.api_urls')),
     path('api/products/',include('products.api_urls')),
-    # path('api/prices/',include('prices.api_urls')),
+    path('api/prices/',include('prices.api_urls')),
 ]
