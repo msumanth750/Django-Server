@@ -11,9 +11,7 @@ from rest_framework import viewsets
 from .models import Brand
 from .serializers import BrandSerializer
 # Create your views here.
-import requests
 def brands(request):
-    brands=requests.get('https://fairbar.site/api/brands/').json()
     return render(request,'brands.html',{'brands':brands})
 #==============================================================
 #             Django Generic views
