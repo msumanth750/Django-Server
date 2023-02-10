@@ -12,7 +12,17 @@ from .models import Brand
 from .serializers import BrandSerializer
 # Create your views here.
 def brands(request):
-    return render(request,'brands.html',{'brands':brands})
+    brands = Brand.objects.select_related('prices').values('id','name',
+                                                            'numericcode',
+                                                            'scode',
+                                                            'category__name',
+                                                            'prices__id',
+                                                            'prices__mrp',
+                                                            'prices__bar_price',
+                                                            'prices__min_price',
+                                                            'prices__effective_date')
+    print(brands)
+    return render(request,'brands.html',{'object_list':brands})
 #==============================================================
 #             Django Generic views
 #==============================================================
@@ -23,7 +33,7 @@ class BrandCreate(CreateView):
 
 class BrandsList(ListView):
     model =Brand
-    template_name = 'brands.html'
+    template_name = 'brands/brand_list.html'
 
 class BrandDetail(DetailView):
     model =Brand
@@ -31,12 +41,12 @@ class BrandDetail(DetailView):
 class BrandUpdate(UpdateView):
     model =Brand
     fields = ('__all__')
-    success_url ='/brands/list'
+    success_url ='/brands'
 
 class BrandDelete(DeleteView):
     model =Brand
 
-    success_url = '/brands/list'
+    success_url = '/brands'
 #==============================================================
 
 class BrandViewset(viewsets.ModelViewSet):

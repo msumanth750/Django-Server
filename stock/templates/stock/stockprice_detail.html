@@ -1,0 +1,9 @@
+{% extends 'myapp/base.html' %}
+{%block main_content%}
+<div class="class="container-fluid px-4"">
+  <h1><a href="/{{object.id}}">{{ object.name }}</a></h1>
+  <p>{{ object }}</p>
+  <a href="{%url 'brand_update' object.id%}">Edit</a>
+  <a href="{%url 'brand_delete' object.id%}">Delete</a>
+</div>
+{%endblock%}

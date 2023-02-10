@@ -17,18 +17,18 @@
                     <tr>
                       <th>Numeric</th>
                         <th>Name</th>
-                        <th>Code</th>
-                        <th>category</th>
-                        <th>Price</th>
-                        <th>Stock</th>
-                        <th>Sold Stock</th>
-                        <th>Amount</th>
+                        <th>ID</th>
+                        <th>MRP</th>
+                        <th>BAR PRICE</th>
+                        <th>EFF Date</th>
+                        <th>min_price</th>
+                        <th>Action</th>
                         <th>Details</th>
 
                     </tr>
                 </thead>
                 <tfoot>
-                    <tr>
+                    <!-- <tr>
                       <th>Numeric</th>
                       <th>Name</th>
                       <th>Code</th>
@@ -38,20 +38,32 @@
                       <th>Sold Stock</th>
                       <th>Amount</th>
                       <th>Details</th>
-                    </tr>
+                    </tr> -->
                 </tfoot>
                 <tbody>
                   {%for brand in object_list%}
                   <tr>
                     <td>{{brand.numericcode}}</td>
                     <td>{{brand.name}}</td>
-                    <td>{{brand.scode}}</td>
-                    <td>{{brand.category}}({{brand.category.code}})</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td><a href="{% url 'brand_detail' brand.id%}">More..</a></td>
+                    <td colspan="6">
+                    {%if brand.prices__id%}
+                    <form class="" action="{%url 'Price_update' brand.prices__id %}" method="post">
+                    {%else%}
+                    <form class="" action="{%url 'Price_create'%}" method="post">
+                    {%endif%}
+                      {%csrf_token%}
+                      <input type="number" name="brand" value="{{brand.id}}" hidden>
+                      <input type="number" name="mrp" value="{{brand.prices__mrp}}">
+                      <input type="number" name="bar_price" value="{{brand.prices__bar_price}}">
+                    <input type="date" name="effective_date" value="{{brand.prices__effective_date}}">
+                      <input type="number" name="min_price" value="{{brand.prices__min_price}}">
+                    <button type="submit" name="button">save</button>
+
+
+                    </form>
+                    </td>
+                    <td></td>
+
                   </tr>
                   {%endfor%}
                 </tbody>

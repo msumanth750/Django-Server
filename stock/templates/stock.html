@@ -91,14 +91,14 @@
                     </tr>
                 </tfoot>
                 <tbody>
-                  {%for brand in brands%}
+                  {%for stock in object_list%}
                   <tr>
-                    <td>{{brand.id}}</td>
-                    <td>{{brand.name}}</td>
-                    <td>{{brand.scode}}</td>
-                    <td>{{brand.numericcode}}</td>
-                    <td>{{brand.category}}</td>
-                    <td>del upd</td>
+                    <td>{{stock.id}}</td>
+                    <td>{{stock.brand}}</td>
+                    <td>{{stock.quantity}}</td>
+                    <td>{{stock.date}}</td>
+                    <td>{{stock.current_prices}}</td>
+                    <td>{{stock.updated_date}}</td>
                   </tr>
                   {%endfor%}
                 </tbody>
