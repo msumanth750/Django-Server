@@ -1,109 +1,47 @@
 {% extends 'myapp/base.html' %}
 {%block main_content%}
-<div class="container-fluid px-4">
-    <h1 class="mt-4">Stocks</h1>
-    <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item active">Dashboard</li>
-    </ol>
-    <div class="row">
-        <div class="col-xl-3 col-md-6">
-            <div class="card bg-primary text-white mb-4">
-                <div class="card-body">Sales (20,52,587/-)</div>
-                <div class="card-footer d-flex align-items-center justify-content-between">
-                    <a class="small text-white stretched-link" href="#">View Details</a>
-                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-3 col-md-6">
-            <div class="card bg-warning text-white mb-4">
-                <div class="card-body">Expenditure (5,52,587/-)</div>
-                <div class="card-footer d-flex align-items-center justify-content-between">
-                    <a class="small text-white stretched-link" href="#">View Details</a>
-                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-3 col-md-6">
-            <div class="card bg-success text-white mb-4">
-                <div class="card-body">Counter Cash</div>
-                <div class="card-footer d-flex align-items-center justify-content-between">
-                    <a class="small text-white stretched-link" href="#">View Details</a>
-                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-3 col-md-6">
-            <div class="card bg-danger text-white mb-4">
-                <div class="card-body">Loans Card</div>
-                <div class="card-footer d-flex align-items-center justify-content-between">
-                    <a class="small text-white stretched-link" href="#">View Details</a>
-                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-xl-6">
-            <div class="card mb-4">
-                <div class="card-header">
-                    <i class="fas fa-chart-area me-1"></i>
-                    Daily Sales
-                </div>
-                <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
-            </div>
-        </div>
-        <div class="col-xl-6">
-            <div class="card mb-4">
-                <div class="card-header">
-                    <i class="fas fa-chart-bar me-1"></i>
-                    Monthly Example
-                </div>
-                <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
-            </div>
-        </div>
-    </div>
-    <div class="card mb-4">
-        <div class="card-header">
-            <i class="fas fa-table me-1"></i>
-            DataTable Example
-        </div>
-        <div class="card-body">
-            <table id="datatablesSimple">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Shortcut</th>
-                        <th>Numeric</th>
-                        <th>category</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tfoot>
-                    <tr>
-                      <th>ID</th>
-                      <th>Name</th>
-                      <th>Shortcut</th>
-                      <th>Numeric</th>
-                      <th>category</th>
-                      <th>Actions</th>
-                    </tr>
-                </tfoot>
-                <tbody>
-                  {%for stock in object_list%}
-                  <tr>
-                    <td>{{stock.id}}</td>
-                    <td>{{stock.brand}}</td>
-                    <td>{{stock.quantity}}</td>
-                    <td>{{stock.date}}</td>
-                    <td>{{stock.current_prices}}</td>
-                    <td>{{stock.updated_date}}</td>
-                  </tr>
-                  {%endfor%}
-                </tbody>
-            </table>
-        </div>
-    </div>
+<form class="" action="" method="get">
+  <input type="date" name="date" value="{{date}}">
+  <button type="submit">Submit</button>
+
+</form>
+<style media="screen">
+  #container {
+    column-count:2;
+    -moz-column-count:2;
+    -webkit-column-count:2;
+}
+</style>
+<div id="container">
+  <table>
+    <thead>
+
+    </thead>
+    <tbody>
+      <tr>
+        <th>Brand ID</th>
+        <th>date</th>
+      </tr>
+      {%for brand in brands%}
+      <tr>
+        <th>{{brand.name}}</th>
+        <th>{{date}}</th>
+        <th>  <form class="" action="{%url 'Stock_create'%}" method="post">
+            {%csrf_token%}
+            <input type="text" name="brand" value="{{brand.id}}"hidden>
+            <input type="date" name="date" value="{{date}}" hidden>
+            <input type="text" name="quantity" value="{{brand.qty}}">
+            <input type="submit"  value="submit">
+
+          </form></th>
+
+      </tr>
+      {%endfor%}
+    </tbody>
+  </table>
+
+
 </div>
+
+
 {%endblock%}

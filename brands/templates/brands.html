@@ -1,34 +1,34 @@
 {% extends 'myapp/base.html' %}
 {%block main_content%}
 <div class="container-fluid px-4">
-    <h1 class="mt-4">Brands</h1>
-    <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item active">Dashboard</li>
-    </ol>
+  <h1 class="mt-4">Brands</h1>
+  <ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item active">Dashboard</li>
+  </ol>
 
-    <div class="card mb-4">
-        <div class="card-header">
-            <i class="fas fa-table me-1"></i>
-            Brands Details (DD-MM-YYYY) | <a href="{%url 'brand_create'%}">Add New</a>
-        </div>
-        <div class="card-body">
-            <table id="datatablesSimple">
-                <thead>
-                    <tr>
-                      <th>Numeric</th>
-                        <th>Name</th>
-                        <th>ID</th>
-                        <th>MRP</th>
-                        <th>BAR PRICE</th>
-                        <th>EFF Date</th>
-                        <th>min_price</th>
-                        <th>Action</th>
-                        <th>Details</th>
+  <div class="card mb-4">
+    <div class="card-header">
+      <i class="fas fa-table me-1"></i>
+      Brands Details (DD-MM-YYYY) | <a href="{%url 'brand_create'%}">Add New</a>
+    </div>
+    <div class="card-body">
+      <table id="datatablesSimple">
+        <thead>
+          <tr>
+            <th>Numeric</th>
+            <th>Name</th>
+            <th>ID</th>
+            <th>MRP</th>
+            <th>BAR PRICE</th>
+            <th>EFF Date</th>
+            <th>min_price</th>
+            <th>Action</th>
+            <th>Details</th>
 
-                    </tr>
-                </thead>
-                <tfoot>
-                    <!-- <tr>
+          </tr>
+        </thead>
+        <tfoot>
+          <tr>
                       <th>Numeric</th>
                       <th>Name</th>
                       <th>Code</th>
@@ -38,37 +38,37 @@
                       <th>Sold Stock</th>
                       <th>Amount</th>
                       <th>Details</th>
-                    </tr> -->
-                </tfoot>
-                <tbody>
-                  {%for brand in object_list%}
-                  <tr>
-                    <td>{{brand.numericcode}}</td>
-                    <td>{{brand.name}}</td>
-                    <td colspan="6">
-                    {%if brand.prices__id%}
-                    <form class="" action="{%url 'Price_update' brand.prices__id %}" method="post">
-                    {%else%}
-                    <form class="" action="{%url 'Price_create'%}" method="post">
-                    {%endif%}
-                      {%csrf_token%}
-                      <input type="number" name="brand" value="{{brand.id}}" hidden>
-                      <input type="number" name="mrp" value="{{brand.prices__mrp}}">
-                      <input type="number" name="bar_price" value="{{brand.prices__bar_price}}">
-                    <input type="date" name="effective_date" value="{{brand.prices__effective_date}}">
-                      <input type="number" name="min_price" value="{{brand.prices__min_price}}">
-                    <button type="submit" name="button">save</button>
+                    </tr>
+        </tfoot>
+        <tbody>
+          {%for brand in object_list%}
+          <tr>
+            <td>{{brand.numericcode}}</td>
+            <td>{{brand.name}}</td>
+            <td colspan="6">
+              {%if brand.prices__id%}
+              <form class="" action="{%url 'Price_update' brand.prices__id %}" method="post">
+                {%else%}
+                <form class="" action="{%url 'Price_create'%}" method="post">
+                  {%endif%}
+                  {%csrf_token%}
+                  <input type="number" name="brand" value="{{brand.id}}" hidden>
+                  <input type="number" name="mrp" value="{{brand.prices__mrp}}">
+                  <input type="number" name="bar_price" value="{{brand.prices__bar_price}}">
+                  <input type="text" name="effective_date" value="{{brand.prices__effective_date |date:'Y-m-d'}}">
+                  <input type="number" name="min_price" value="{{brand.prices__min_price}}">
+                  <button type="submit" name="button">save</button>
 
 
-                    </form>
-                    </td>
-                    <td></td>
+                </form>
+            </td>
+            <td></td>
 
-                  </tr>
-                  {%endfor%}
-                </tbody>
-            </table>
-        </div>
+          </tr>
+          {%endfor%}
+        </tbody>
+      </table>
     </div>
+  </div>
 </div>
 {%endblock%}
