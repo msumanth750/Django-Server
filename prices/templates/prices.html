@@ -1,66 +1,114 @@
-{% extends 'myapp/base.html' %}
-{%block main_content%}
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
-<div class="container-fluid px-4 m-5">
-    <h1 class="mt-4">Prices</h1>
-    <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item active">Dashboard</li>
-    </ol>
-    <div class="card mb-4">
-        <div class="card-header">
-            <i class="fas fa-table me-1"></i>
-            Current prices
-            <input class="form-control" id="myInput" type="text" placeholder="Search..">
+{% extends 'myapp/content.html' %}
+{%block maindiv%}
+<table class="table table-sm table-hover text-nowrap ">
+  <thead>
+    <tr>
+      <th scope="col">Brand</th>
+      <th scope="col">MRP</th>
+      <th scope="col">BAR PRICE</th>
+      <th scope="col">EFF DATE</th>
+      <th scope="col">MIN PRICE </th>
+      <th scope="col">Remarks</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">Value</th>
+      <td>18,492</td>
+      <td>228</td>
+      <td>350</td>
+      <td>$4,787.64</td>
+      <td>$13.68</td>
+    </tr>
+    <tr>
+      <th scope="row">Percentage change</th>
+      <td>
+        <span class="text-danger">
+          <i class="fas fa-caret-down me-1"></i><span>-48.8%%</span>
+        </span>
+      </td>
+      <td>
+        <span class="text-success">
+          <i class="fas fa-caret-up me-1"></i><span>14.0%</span>
+        </span>
+      </td>
+      <td>
+        <span class="text-success">
+          <i class="fas fa-caret-up me-1"></i><span>46.4%</span>
+        </span>
+      </td>
+      <td>
+        <span class="text-success">
+          <i class="fas fa-caret-up me-1"></i><span>29.6%</span>
+        </span>
+      </td>
+      <td>
+        <span class="text-danger">
+          <i class="fas fa-caret-down me-1"></i><span>-11.5%</span>
+        </span>
+      </td>
+    </tr>
+    <tr>
+      <th scope="row">Absolute change</th>
+      <td>
+        <span class="text-danger">
+          <i class="fas fa-caret-down me-1"></i><span>-17,654</span>
+        </span>
+      </td>
+      <td>
+        <span class="text-success">
+          <i class="fas fa-caret-up me-1"></i><span>28</span>
+        </span>
+      </td>
+      <td>
+        <span class="text-success">
+          <i class="fas fa-caret-up me-1"></i><span>111</span>
+        </span>
+      </td>
+      <td>
+        <span class="text-success">
+          <i class="fas fa-caret-up me-1"></i><span>$1,092.72</span>
+        </span>
+      </td>
+      <td>
+        <span class="text-danger">
+          <i class="fas fa-caret-down me-1"></i><span>$-1.78</span>
+        </span>
+      </td>
+    </tr>
 
-        </div>
-        <div class="card-body">
-            <table id="table table-sm">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Bar price</th>
-                        <th>MRP</th>
-                        <th>Min Price</th>
-                        <th>Eff Date</th>
-                    </tr>
-                </thead>
-                <tfoot>
-                    <tr>
-                      <th>ID</th>
-                      <th>Name</th>
-                      <th>Bar Price</th>
-                      <th>MRP</th>
-                      <th>Min Price</th>
-                      <th>Eff Date</th>
-                    </tr>
-                </tfoot>
-                <tbody id="myTable">
-                  {%for price in object_list%}
-                  <tr>
-                    <td>{{price.brand.numericcode}}</td>
-                    <td>{{price.brand}}</td>
-                    <td>{{price.bar_price}}</td>
-                    <td>{{price.mrp}}</td>
-                    <td>{{price.min_price}}</td>
-                    <td>{{price.effective_date}}</td>
-                  </tr>
-                  {%endfor%}
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-<script>
-   $(document).ready(function() {
-     $("#myInput").on("keyup", function() {
-       var value = $(this).val().toLowerCase();
-       $("#myTable tr").filter(function() {
-         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-       });
-     });
-   });
- </script>
+    {%for price in prices%}
+    <tr>
+      <th scope="row">{{price.brand}}</th>
+      <td>
+        <span class="text-danger">
+          <i class="fas fa-caret-down me-1"></i><span>{{price.bar_price}}</span>
+        </span>
+      </td>
+      <td>
+        <span class="text-success">
+          <i class="fas fa-caret-up me-1"></i><span>{{price.mrp}}</span>
+        </span>
+      </td>
+      <td>
+        <span class="text-success">
+          <i class="fas fa-caret-up me-1"></i><span>{{price.min_price}}</span>
+        </span>
+      </td>
+      <td>
+        <span class="text-success">
+          <i class="fas fa-caret-up me-1"></i><span>${{price.date}}</span>
+        </span>
+      </td>
+      <td>
+        <span class="text-danger">
+          <i class="fas fa-caret-down me-1"></i><span>$-{{price.id}}</span>
+        </span>
+      </td>
+    </tr>
+    {%endfor%}
+  </tbody>
+</table>
+{%endblock%}
+{%block sidediv%}
 {%endblock%}

@@ -7,22 +7,33 @@ from django.views.generic.edit import UpdateView
 from django.views.generic.edit import DeleteView
 #=============================================
 from rest_framework import viewsets
-
+from myapp.utils import current_date,current_month_dates
 from .models import Brand
 from .serializers import BrandSerializer
+from django.db.models import Q
+from rest_framework.permissions import IsAuthenticated
+from .utils import *
+from mysite.settings import *
+import requests
 # Create your views here.
 def brands(request):
-    brands = Brand.objects.select_related('prices').values('id','name',
-                                                            'numericcode',
-                                                            'scode',
-                                                            'category__name',
-                                                            'prices__id',
-                                                            'prices__mrp',
-                                                            'prices__bar_price',
-                                                            'prices__min_price',
-                                                            'prices__effective_date')
-    print(brands)
-    return render(request,'brands.html',{'object_list':brands})
+    base_url=ApiBaseurl
+    sdate = request.GET.get('sdate',current_month_dates()[0].strftime("%Y-%m-%d"))
+    edate = request.GET.get('edate',current_month_dates()[1].strftime("%Y-%m-%d"))
+
+    search = request.GET.get('search',None)
+    params ={}
+    if search:
+        params['search']=search
+    if sdate and edate:
+        params['sdate']=sdate
+        params['edate']=edate
+    brands = requests.get(base_url+'brands',params=params)
+    return render(request,'brands.html',{'brands':brands.json(),
+                                         'Search':search,
+                                         'start':sdate,
+                                         'end':edate,
+                                         })
 #==============================================================
 #             Django Generic views
 #==============================================================
@@ -50,6 +61,11 @@ class BrandDelete(DeleteView):
 #==============================================================
 
 class BrandViewset(viewsets.ModelViewSet):
+    # permission_classes = (IsAuthenticated,)
     queryset = Brand.objects.all()
     serializer_class = BrandSerializer
     lookup_field ='id'
+    search_fields = ('scode','id','category__name','name')
+    #
+    # def get_queryset(self,request):
+    #     self.request.query

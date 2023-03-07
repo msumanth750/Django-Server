@@ -1,0 +1,24 @@
+{% extends 'myapp/base.html' %}
+{%block main_content%}
+{%include 'myapp/mdb_base.html'%}
+<div class="container-fluid px-4">
+  <!-- <div class="card mb-2" style="height:3rem"> -->
+    {%block header%}
+    {%endblock%}
+  <!-- </div> -->
+  <div class="row">
+    <div class="col-9">
+      <div class="card" style="height: 47rem;">
+        {%block maindiv%}
+        {%endblock%}
+      </div>
+    </div>
+    <div class="col-3">
+      <div class="card" style="height: 47rem;">
+        {%block sidediv%}
+        {%endblock%}
+      </div>
+    </div>
+  </div>
+</div>
+{%endblock%}

@@ -17,9 +17,9 @@ class Stockprice(models.Model):
 class Stock(models.Model):
     brand = models.ForeignKey('brands.Brand',on_delete = models.CASCADE,related_name='stocks')
     quantity = models.IntegerField()
-    date = models.DateField(auto_now_add=True)
+    date = models.DateField()
     updated_date =models.DateField(auto_now=True)
     # current_prices =models.ForeignKey('Stockprice',on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'self.brand self.date'
+        return f'{self.brand.name} {self.date}'

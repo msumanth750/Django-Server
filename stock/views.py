@@ -11,30 +11,21 @@ from django.views.generic.edit import DeleteView
 from .models import Stock,Stockprice
 from brands.models import Brand
 from datetime import datetime
+
+import requests
+from myapp.utils import current_month_dates
+from mysite.settings import ApiBaseurl
 # Create your views here.
 def stock(request):
-    date = request.GET.get('date',None)
-    brands =Brand.objects.order_by('numericcode').values()
-    stocks =[]
-    for brand in brands:
-        if not date:
-            date = datetime.today().date()
-            print(date)
-        stock = Stock.objects.filter(brand=brand['id'],date=date).first()
-        if stock:
-            brand['qty']=stock.quantity
-        else:
-            brand['qty']=0
-
-
-    context = {
-
-        'brands' : brands,
-        'date':date
-
-    }
-
-    return render(request,'stock.html',context)
+    base_url = ApiBaseurl
+    sdate = request.GET.get('sdate',current_month_dates()[0].strftime("%Y-%m-%d"))
+    edate = request.GET.get('edate',current_month_dates()[1].strftime("%Y-%m-%d"))
+    stocks=requests.get(base_url+'stock/',
+                        params = {
+                        'start':sdate,
+                        'end':edate,
+                        })
+    return render(request,'stock.html',{'stocks':stocks.json()})
 
 
 class StockViewset(viewsets.ModelViewSet):

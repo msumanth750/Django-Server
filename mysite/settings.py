@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'import_export',
 
     'authenticate',
     'myapp',
@@ -51,6 +52,7 @@ INSTALLED_APPS = [
     'stock',
     'prices',
     'receits',
+    'expenditure',
     'cash',
 ]
 
@@ -111,14 +113,28 @@ else:
         'PORT': os.environ["PGPORT"],
         }
         }
+#
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': 'mydatabase',
+#     }
+# }
 
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    ]
+    ],
+    'DEFAULT_FILTER_BACKENDS':('rest_framework.filters.SearchFilter',),
+    'SEARCH_PARAM':'search'
 }
+
+ApiBaseurl='http://127.0.0.1:8000/api/'
 
 
 # Password validation
@@ -156,13 +172,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+# STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 
 STATICFILES_DIRS = [
     BASE_DIR / "static",
-    'Django-Server/static/static/',
+    'Django-Server/static',
 ]
 
 # Default primary key field type

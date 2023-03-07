@@ -16,11 +16,11 @@ class ReceitMeta(models.Model):
 
 
 class Receit(models.Model):
-    brand = models.ForeignKey('brands.Brand',on_delete = models.CASCADE)
+    brand = models.ForeignKey('brands.Brand',on_delete = models.CASCADE,related_name='receits')
     quantity = models.IntegerField()
-    date = models.DateField(auto_now_add=True)
+    date = models.DateField()
     updated_date =models.DateField(auto_now=True)
     invoice = models.ForeignKey('ReceitMeta',on_delete =models.CASCADE)
 
     def __str__(self):
-        return self.brand
+        return f'{self.brand.scode}-{self.date}'

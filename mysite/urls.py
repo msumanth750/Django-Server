@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
+from rest_framework_simplejwt import views as jwt_views
 from myapp.views import index
 
 from django.contrib.auth.models import User
@@ -43,8 +44,16 @@ urlpatterns = [
     path('cash/',include('cash.urls')),
     path('products/',include('products.urls')),
     path('prices/',include('prices.urls')),
+    path('expenses/',include('expenditure.urls')),
+
     path('',index,name='dashboard')
 ]+[
+    path('api/token/',
+         jwt_views.TokenObtainPairView.as_view(),
+         name ='token_obtain_pair'),
+    path('api/token/refresh/',
+         jwt_views.TokenRefreshView.as_view(),
+         name ='token_refresh'),
     path('api/', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('api/brands/',include('brands.api_urls')),
@@ -54,4 +63,6 @@ urlpatterns = [
     # path('api/cash/',include('cash.api_urls')),
     path('api/products/',include('products.api_urls')),
     path('api/prices/',include('prices.api_urls')),
+    path('api/expenses/',include('expenditure.api_urls')),
+
 ]

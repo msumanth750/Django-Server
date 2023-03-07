@@ -4,10 +4,13 @@ from rest_framework import viewsets
 from .serializers import ReceitSerializer
 from .models import Receit
 
+import requests
+from mysite.settings import *
 # Create your views here.
 def receits(request):
-    # brands = Brand.objects.all()
-    return render(request,'receits.html')
+    base_url =ApiBaseurl
+    receits =requests.get(base_url+'receits/')
+    return render(request,'receits.html',{'receits':receits.json()})
 
 
 class ReceitViewset(viewsets.ModelViewSet):

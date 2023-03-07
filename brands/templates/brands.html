@@ -1,74 +1,111 @@
-{% extends 'myapp/base.html' %}
-{%block main_content%}
-<div class="container-fluid px-4">
-  <h1 class="mt-4">Brands</h1>
-  <ol class="breadcrumb mb-4">
-    <li class="breadcrumb-item active">Dashboard</li>
-  </ol>
+brand{% extends 'myapp/content.html' %}
+{%block header%}
 
-  <div class="card mb-4">
-    <div class="card-header">
-      <i class="fas fa-table me-1"></i>
-      Brands Details (DD-MM-YYYY) | <a href="{%url 'brand_create'%}">Add New</a>
-    </div>
-    <div class="card-body">
-      <table id="datatablesSimple">
-        <thead>
-          <tr>
-            <th>Numeric</th>
-            <th>Name</th>
-            <th>ID</th>
-            <th>MRP</th>
-            <th>BAR PRICE</th>
-            <th>EFF Date</th>
-            <th>min_price</th>
-            <th>Action</th>
-            <th>Details</th>
+<div class="row">
+  <div class="col-6">
 
-          </tr>
-        </thead>
-        <tfoot>
-          <tr>
-                      <th>Numeric</th>
-                      <th>Name</th>
-                      <th>Code</th>
-                      <th>category</th>
-                      <th>Price</th>
-                      <th>Stock</th>
-                      <th>Sold Stock</th>
-                      <th>Amount</th>
-                      <th>Details</th>
-                    </tr>
-        </tfoot>
-        <tbody>
-          {%for brand in object_list%}
-          <tr>
-            <td>{{brand.numericcode}}</td>
-            <td>{{brand.name}}</td>
-            <td colspan="6">
-              {%if brand.prices__id%}
-              <form class="" action="{%url 'Price_update' brand.prices__id %}" method="post">
-                {%else%}
-                <form class="" action="{%url 'Price_create'%}" method="post">
-                  {%endif%}
-                  {%csrf_token%}
-                  <input type="number" name="brand" value="{{brand.id}}" hidden>
-                  <input type="number" name="mrp" value="{{brand.prices__mrp}}">
-                  <input type="number" name="bar_price" value="{{brand.prices__bar_price}}">
-                  <input type="text" name="effective_date" value="{{brand.prices__effective_date |date:'Y-m-d'}}">
-                  <input type="number" name="min_price" value="{{brand.prices__min_price}}">
-                  <button type="submit" name="button">save</button>
-
-
-                </form>
-            </td>
-            <td></td>
-
-          </tr>
-          {%endfor%}
-        </tbody>
-      </table>
-    </div>
+  </div>
+  <div class="col-3">
+    <form class="" method="get">
+      <div class="input-group mb-3">
+        <span class="input-group-text border-0" id="search-addon"><i class="fas fa-search"></i></span>
+        <input type="search" name='search' value="{{Search}}" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+      </div>
+    </form>
   </div>
 </div>
+
+
+{%endblock%}
+{%block maindiv%}
+<table class="table table-borderless table-md table-hover text-nowrap " cellspacing="0" width="100%">
+  <thead class="table-primary">
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Numeric Code</th>
+      <th scope="col">Short Code</th>
+      <th scope="col">Type</th>
+
+      <th scope="col">Marked price</th>
+      <th scope="col">Bar Price</th>
+      <th scope="col">Min Price</th>
+      <th scope="col">Qty Damages</th>
+      <th scope="col">Qty Sold</th>
+      <th scope="col">Remarks</th>
+    </tr>
+  </thead>
+  <tbody>
+    {%for brand in brands%}
+    <tr>
+      <th scope="row">{{brand.name}}</th>
+      <td>
+        <span >
+          <i class=""></i><span>{{brand.numericcode}}</span>
+        </span>
+      </td>
+      <td>
+        <span >
+          <i class=""></i><span>{{brand.scode}}</span>
+        </span>
+      </td>
+      <td>
+        <span >
+          <i class=""></i><span>{{brand.category}}</span>
+        </span>
+      </td>
+      <td>
+        <span >
+          <i class=""></i><span>{{brand.price.mrp}}</span>
+        </span>
+      </td>
+      <td>
+        <span >
+          <i class=""></i><span>{{brand.price.bp}}</span>
+        </span>
+      </td>
+      <td>
+        <span >
+          <i class=""></i><span>{{brand.price.mp}}</span>
+        </span>
+      </td>
+      <td>
+        <span >
+          <i class=""></i><span>{{brand.stock}}</span>
+        </span>
+      </td>
+      <td>
+        <span >
+          <i class=""></i><span>{{brand.stock}}</span>
+        </span>
+      </td>
+      <td>
+        <span >
+          <i class=""></i><span>-</span>
+        </span>
+      </td>
+    </tr>
+    {%endfor%}
+  </tbody>
+</table>
+{%endblock%}
+{%block sidediv%}
+  <div class="row m-5">
+    <div class="col-10">
+      <form class="" action="" method="get">
+      <div class="form-outline datepicker" data-mdb-inline="true">
+        <input type="text" value='{{start}}'class="form-control" name="sdate" id="exampleDatepicker2" />
+        <label for="exampleDatepicker2" class="form-label">Select a start date</label>
+      </div>
+
+      <div class="form-outline datepicker" data-mdb-inline="true">
+        <input type="text" value='{{end}}'class="form-control" name="edate" id="exampleDatepicker2" />
+        <label for="exampleDatepicker2" class="form-label">Select a end date</label>
+      </div>
+      <input type="submit" name="" value="submit">
+    </form>
+
+    </div>
+
+  </div>
+
 {%endblock%}

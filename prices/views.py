@@ -11,9 +11,17 @@ from rest_framework import viewsets
 from .serializers import PriceSerializer
 from .models import Price
 from django.urls import reverse_lazy
+
+
+import requests
+from mysite.settings import *
 # Create your views here.
 def prices(request):
-    return render(request,'prices.html')
+    base_url =ApiBaseurl
+    prices =requests.get(base_url+'prices/')
+    return render(request,'prices.html',{'prices':prices.json()})
+
+
 
 class PriceViewset(viewsets.ModelViewSet):
     queryset = Price.objects.all()
