@@ -97,7 +97,7 @@ if DEBUG:
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'NAME': 'railway', #os.environ["PGDATABASE"],
             'USER': 'postgres',#os.environ["PGUSER"],
-            'PASSWORD': 'ylT7jpoihVRZMRysHHWb' ,#os.environ["PGPASSWORD"],
+            'PASSWORD': 'J9Ky8zSqTe8m2HsuDyQE' ,#os.environ["PGPASSWORD"],
             'HOST': 'containers-us-west-74.railway.app',#os.environ["PGHOST"],
             'PORT': 7662,#os.environ["PGPORT"],
         }
